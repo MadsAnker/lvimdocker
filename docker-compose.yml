@@ -1,0 +1,15 @@
+services:
+  lvim:
+    build: .
+    image: lvim
+    stdin_open: true
+    tty: true
+    volumes:
+      - lvimpacker:/root/.local/share/lunarvim/site/pack/packer
+      - lvimconfig:/root/.config
+      - ./:/files
+
+volumes:
+  lvimpacker:
+
+  lvimconfig:

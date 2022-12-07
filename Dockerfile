@@ -20,9 +20,25 @@ RUN apt update && \
   curl -LSs https://raw.githubusercontent.com/lunarvim/lunarvim/${LV_BRANCH}/utils/installer/install-neovim-from-release | bash && \
   LV_BRANCH=${LV_BRANCH} curl -LSs https://raw.githubusercontent.com/lunarvim/lunarvim/${LV_BRANCH}/utils/installer/install.sh | bash -s -- --no-install-dependencies
 
+# ghcup installation
+RUN \
+    curl https://downloads.haskell.org/~ghcup/x86_64-linux-ghcup > /usr/bin/ghcup && \
+    chmod +x /usr/bin/ghcup
+
+ARG GHC=9.2.4
+ARG CABAL=latest
+
+# install GHC and cabal
+RUN \
+    ghcup -v install ghc --isolate /usr/local --force ${GHC} && \
+    ghcup -v install cabal --isolate /usr/local/bin --force ${CABAL}
+
+RUN apt update && apt install -y zip libgmp-dev
+
 RUN mkdir files && cd files
+WORKDIR /files
 # Setup LVIM to run on startup
 ENTRYPOINT ["/bin/bash"]
-CMD ["lvim", "/files"]
+CMD ["lvim"]
 
 # vim: ft=dockerfile:

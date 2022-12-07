@@ -5,11 +5,13 @@ services:
     stdin_open: true
     tty: true
     volumes:
-      - lvimpacker:/root/.local/share/lunarvim/site/pack/packer
+      #- lvimpacker:/root/.local/share/lunarvim/site/pack/packer
       - lvimconfig:/root/.config
-      - ./:/files
+      #- masonpackages:/root/.local/share/nvim/mason/packages
+      - local:/root/.local
+      - $PWD:/files
 
 volumes:
-  lvimpacker:
-
   lvimconfig:
+
+  local:
